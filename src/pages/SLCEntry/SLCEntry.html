@@ -1,0 +1,53 @@
+  <ion-header text-center>
+    <ion-navbar>
+      <ion-title style="margin-top: 20px">Subway Load Check</ion-title>
+    </ion-navbar>
+  </ion-header>
+
+<ion-content padding>
+  <ion-card padding>
+    <ion-row text-center>
+      <ion-img style="width: 150px; background-color: white;" src="assets/imgs/mta_nyc_logo_svg1.png"></ion-img>
+      <ion-label style = "font-size: 40px;">Welcome to <br><b>Subway Load Check</b><br> Survey</ion-label>
+    </ion-row>
+  </ion-card>
+
+  <ion-card padding>
+    <ion-row text-center>
+      <ion-col>
+      </ion-col>
+      <ion-col>
+        <ion-label style = "font-size: 20px;">
+          Make sure you have your <b>Payroll Number</b>, <br>and <b>Scheduled Assignments</b> ready in hand.
+        </ion-label>
+      </ion-col>
+      <ion-col>
+      </ion-col>
+    </ion-row>
+
+    <ion-row text-center>
+      <ion-col>
+      </ion-col>
+      <ion-col>
+        <button ion-button round style="font-size: 24px; height: 60px; width: 460px;" (click)="mainController()">Click Here To Continue</button>
+      </ion-col>
+      <ion-col>
+      </ion-col>
+    </ion-row>
+  </ion-card>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-row>
+      <ion-col>
+        <ion-label no-margin style="color: black; font-size: 15px;">Asset Tag#: {{assetTag}}</ion-label>
+      </ion-col>
+
+      <ion-col>
+        <ion-label no-margin align="right" style="color: black; font-size: 15px;">App Version: 1.0.5</ion-label>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-footer>

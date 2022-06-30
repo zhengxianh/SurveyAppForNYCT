@@ -1,0 +1,222 @@
+<ion-header text-center>
+  <ion-navbar>
+    <ion-title style="padding-right: 30px;">Subway Load Check</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-card>
+    <ion-row text-center>
+      <ion-label style = "font-size: 40px;">Select Your Station</ion-label>
+    </ion-row>
+    <ion-row text-center>
+      <ion-col>
+        <button tappable ion-button (click)="display(1)">0-2</button>
+      </ion-col>
+      <ion-col>
+        <button tappable ion-button (click)="display(2)">3-5</button>
+      </ion-col>
+      <ion-col>
+        <button tappable ion-button (click)="display(3)">6-9</button>
+      </ion-col>
+      <ion-col>
+        <button tappable ion-button (click)="display(4)">A-B</button>
+      </ion-col>
+      <ion-col>
+        <button tappable ion-button (click)="display(5)">C-E</button>
+      </ion-col>
+      <ion-col>
+        <button tappable ion-button (click)="display(6)">F-K</button>
+      </ion-col>
+      <ion-col>
+        <button tappable ion-button (click)="display(7)">L-P</button>
+      </ion-col>
+      <ion-col>
+        <button tappable ion-button (click)="display(8)">Q-T</button>
+      </ion-col>
+      <ion-col>
+        <button tappable ion-button (click)="display(9)">U-Z</button>
+      </ion-col>
+    </ion-row>
+  </ion-card>
+
+  <ion-card *ngIf = "List == 1" text-center>
+    <ion-row >
+      <ion-col col-4>
+        <ion-row *ngFor = "let i of List1" no-padding>
+          <button tappable ion-button full (click)="recordStation(i)">{{i}}</button>
+        </ion-row>
+      </ion-col>
+      <ion-col col-4>
+        <ion-row *ngFor = "let i of List2" no-padding>
+          <button tappable ion-button full (click)="recordStation(i)">{{i}}</button>
+        </ion-row>
+      </ion-col>
+      <ion-col col-4>
+        <ion-row *ngFor = "let i of List3" no-padding>
+          <button tappable ion-button full (click)="recordStation(i)">{{i}}</button>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-card>
+
+  <ion-card *ngIf = "List == 2" text-center>
+    <ion-row >
+      <ion-col col-4>
+        <ion-row *ngFor = "let i of List4" no-padding>
+          <button tappable ion-button full (click)="recordStation(i)">{{i}}</button>
+        </ion-row>
+      </ion-col>
+      <ion-col col-4>
+        <ion-row *ngFor = "let i of List5" no-padding>
+          <button tappable ion-button full (click)="recordStation(i)">{{i}}</button>
+        </ion-row>
+      </ion-col>
+      <ion-col col-4>
+        <ion-row *ngFor = "let i of List6" no-padding>
+          <button tappable ion-button full (click)="recordStation(i)">{{i}}</button>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-card>
+
+  <ion-card *ngIf = "List == 3" text-center>
+    <ion-row >
+      <ion-col col-4>
+        <ion-row *ngFor = "let i of List7" no-padding>
+          <button tappable ion-button full (click)="recordStation(i)">{{i}}</button>
+        </ion-row>
+      </ion-col>
+      <ion-col col-4>
+        <ion-row *ngFor = "let i of List8" no-padding>
+          <button tappable ion-button full (click)="recordStation(i)">{{i}}</button>
+        </ion-row>
+      </ion-col>
+      <ion-col col-4>
+        <ion-row *ngFor = "let i of List9" no-padding>
+          <button tappable ion-button full (click)="recordStation(i)">{{i}}</button>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-card>
+
+  <ion-card *ngIf = "List == 4" text-center>
+    <ion-row >
+      <ion-col col-4>
+        <ion-row *ngFor = "let i of List10" no-padding>
+          <button tappable ion-button full (click)="recordStation(i)">{{i}}</button>
+        </ion-row>
+      </ion-col>
+      <ion-col col-4>
+        <ion-row *ngFor = "let i of List11" no-padding>
+          <button tappable ion-button full (click)="recordStation(i)">{{i}}</button>
+        </ion-row>
+      </ion-col>
+      <ion-col col-4>
+        <ion-row *ngFor = "let i of List12" no-padding>
+          <button tappable ion-button full (click)="recordStation(i)">{{i}}</button>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-card>
+
+  <ion-card *ngIf = "List == 5" text-center>
+    <ion-row >
+      <ion-col col-4>
+        <ion-row *ngFor = "let i of List13" no-padding>
+          <button tappable ion-button full (click)="recordStation(i)">{{i}}</button>
+        </ion-row>
+      </ion-col>
+      <ion-col col-4>
+        <ion-row *ngFor = "let i of List14" no-padding>
+          <button tappable ion-button full (click)="recordStation(i)">{{i}}</button>
+        </ion-row>
+      </ion-col>
+      <ion-col col-4>
+        <ion-row *ngFor = "let i of List15" no-padding>
+          <button tappable ion-button full (click)="recordStation(i)">{{i}}</button>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-card>
+
+  <ion-card *ngIf = "List == 6" text-center>
+    <ion-row >
+      <ion-col col-4>
+        <ion-row *ngFor = "let i of List16" no-padding>
+          <button tappable ion-button full (click)="recordStation(i)">{{i}}</button>
+        </ion-row>
+      </ion-col>
+      <ion-col col-4>
+        <ion-row *ngFor = "let i of List17" no-padding>
+          <button tappable ion-button full (click)="recordStation(i)">{{i}}</button>
+        </ion-row>
+      </ion-col>
+      <ion-col col-4>
+        <ion-row *ngFor = "let i of List18" no-padding>
+          <button tappable ion-button full (click)="recordStation(i)">{{i}}</button>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-card>
+
+  <ion-card *ngIf = "List == 7" text-center>
+    <ion-row >
+      <ion-col col-4>
+        <ion-row *ngFor = "let i of List19" no-padding>
+          <button tappable ion-button full (click)="recordStation(i)">{{i}}</button>
+        </ion-row>
+      </ion-col>
+      <ion-col col-4>
+        <ion-row *ngFor = "let i of List20" no-padding>
+          <button tappable ion-button full (click)="recordStation(i)">{{i}}</button>
+        </ion-row>
+      </ion-col>
+      <ion-col col-4>
+        <ion-row *ngFor = "let i of List21" no-padding>
+          <button tappable ion-button full (click)="recordStation(i)">{{i}}</button>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-card>
+
+  <ion-card *ngIf = "List == 8" text-center>
+    <ion-row >
+      <ion-col col-4>
+        <ion-row *ngFor = "let i of List22" no-padding>
+          <button tappable ion-button full (click)="recordStation(i)">{{i}}</button>
+        </ion-row>
+      </ion-col>
+      <ion-col col-4>
+        <ion-row *ngFor = "let i of List23" no-padding>
+          <button tappable ion-button full (click)="recordStation(i)">{{i}}</button>
+        </ion-row>
+      </ion-col>
+      <ion-col col-4>
+        <ion-row *ngFor = "let i of List24" no-padding>
+          <button tappable ion-button full (click)="recordStation(i)">{{i}}</button>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-card>
+
+  <ion-card *ngIf = "List == 9" text-center>
+    <ion-row >
+      <ion-col col-4>
+        <ion-row *ngFor = "let i of List25" no-padding>
+          <button tappable ion-button full (click)="recordStation(i)">{{i}}</button>
+        </ion-row>
+      </ion-col>
+      <ion-col col-4>
+        <ion-row *ngFor = "let i of List26" no-padding>
+          <button tappable ion-button full (click)="recordStation(i)">{{i}}</button>
+        </ion-row>
+      </ion-col>
+      <ion-col col-4>
+        <ion-row *ngFor = "let i of List27" no-padding>
+          <button tappable ion-button full (click)="recordStation(i)">{{i}}</button>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-card>
+</ion-content>

@@ -1,0 +1,118 @@
+<ion-header text-center>
+  <ion-navbar>
+    <ion-row>
+      <ion-col></ion-col>
+      <ion-col>
+        <ion-title>Recorded Data</ion-title>        
+      </ion-col>
+      <ion-col>
+        <ion-buttons end>
+          <button ion-button solid color="secondary" (click)="dismiss()">Close</button>
+        </ion-buttons>
+      </ion-col>
+    </ion-row>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-row>
+    <ion-col>
+      <ion-label no-margin style="color: black; font-size: 20px;">Checker Name: {{_dapDictionary['checkerName']}}</ion-label>
+    </ion-col>
+    <ion-col>
+      <ion-label no-margin style="color: black; font-size: 20px;">Date: {{_dapDictionary['jobDate']}}</ion-label>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col>
+      <ion-label style="color: black; margin-top: 0px;font-size: 20px;">Station: {{_dapDictionary['station']}}</ion-label>
+    </ion-col>
+    <ion-col>
+      <ion-label style="color: black; margin-top: 0px; font-size: 20px;">Direction: {{_dapDictionary['direction']}}</ion-label>
+    </ion-col>
+  </ion-row>
+
+  <ion-row></ion-row>
+
+  <ion-row style="text-align: center;">
+    <ion-col col-1 no-padding style="color: black; font-size: 20px;">Train ID</ion-col>
+    <ion-col col-1 no-padding style="color: black; font-size: 20px;">1st Car#</ion-col>
+    <ion-col col-1 no-padding style="color: black; font-size: 20px;">Actual Arrive</ion-col>
+    <ion-col col-1 no-padding style="color: black; font-size: 20px;">Actual Leave</ion-col>
+    <ion-col no-padding style="color: black; font-size: 20px;">1</ion-col>
+    <ion-col no-padding style="color: black; font-size: 20px;">2</ion-col>
+    <ion-col no-padding style="color: black; font-size: 20px;">3</ion-col>
+    <ion-col no-padding style="color: black; font-size: 20px;">4</ion-col>
+    <ion-col no-padding style="color: black; font-size: 20px;">5</ion-col>
+    <ion-col no-padding style="color: black; font-size: 20px;">6</ion-col>
+    <ion-col no-padding style="color: black; font-size: 20px;">7</ion-col>
+    <ion-col no-padding style="color: black; font-size: 20px;">8</ion-col>
+    <ion-col no-padding style="color: black; font-size: 20px;">9</ion-col>
+    <ion-col no-padding style="color: black; font-size: 20px;">10</ion-col>
+    <ion-col no-padding style="color: black; font-size: 20px;">11</ion-col>
+    <ion-col col-1 no-padding style="color: black; font-size: 20px;">Notes</ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col></ion-col>
+  </ion-row>
+
+  <ion-row style="text-align: center;" *ngFor="let x of data;">
+    <ion-col col-1 no-padding>{{x['trainID']}}</ion-col>
+    <ion-col col-1 no-padding>{{x['leadCarNumb']}}</ion-col>
+    <ion-col col-1 no-padding>{{x['actualArrive']}}</ion-col>
+    <ion-col col-1 no-padding>{{x['actualLeave']}}</ion-col>
+    <ion-col no-padding>{{x['cars'][1]}}</ion-col>
+    <ion-col no-padding>{{x['cars'][2]}}</ion-col>
+    <ion-col no-padding>{{x['cars'][3]}}</ion-col>
+    <ion-col no-padding>{{x['cars'][4]}}</ion-col>
+    <ion-col no-padding>{{x['cars'][5]}}</ion-col>
+    <ion-col no-padding>{{x['cars'][6]}}</ion-col>
+    <ion-col no-padding>{{x['cars'][7]}}</ion-col>
+    <ion-col no-padding>{{x['cars'][8]}}</ion-col>
+    <ion-col no-padding>{{x['cars'][9]}}</ion-col>
+    <ion-col no-padding>{{x['cars'][10]}}</ion-col>
+    <ion-col no-padding>{{x['cars'][11]}}</ion-col>
+    <ion-col col-1 no-padding>{{x['notes']}}</ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col></ion-col>
+  </ion-row>
+
+  <ion-card>
+    <ion-title>Comfort Breaks</ion-title>
+    <ion-row style="text-align: center;">
+      <ion-col col-1>#</ion-col>
+      <ion-col col-4>Comfort Start</ion-col>
+      <ion-col col-4>Comfort End</ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col></ion-col>
+    </ion-row>
+
+    <ion-row style="text-align: center;">
+      <ion-col col-5>
+        <ion-row style="text-align: center;" *ngFor="let x of comfortStart;let z = index">
+          <ion-col col-2>{{z+1}}</ion-col>
+          <ion-col>{{x}}</ion-col>
+        </ion-row>
+      </ion-col>
+      <ion-col col-4>
+        <ion-row style="text-align: center;" *ngFor="let y of comfortEnd;">
+          <ion-col>{{y}}</ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-card>
+      
+  <ion-row>
+    <ion-col></ion-col>
+    <ion-col col-auto text-center>
+      <button ion-button color="danger" (click)="EndSurvey()">End Survey</button>
+    </ion-col>
+    <ion-col></ion-col>    
+  </ion-row>
+</ion-content>

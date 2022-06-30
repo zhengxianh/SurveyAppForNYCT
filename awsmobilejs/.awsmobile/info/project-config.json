@@ -1,0 +1,6 @@
+{
+	"SourceDir": "/src",
+	"DistributionDir": "/www",
+	"BuildCommand": "ionic cordova build ios",
+	"StartCommand": "ionic serve"
+}

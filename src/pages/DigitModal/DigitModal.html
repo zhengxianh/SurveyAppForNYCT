@@ -1,0 +1,91 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{title}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-row text-center>
+      <ion-label style="font-size: 20px;">Please Enter The <b>{{title}}</b> Using The Keypad</ion-label>
+    </ion-row>
+    <ion-row text-center>
+      <ion-col></ion-col>
+      <ion-col>
+        <ion-label>{{DigitArray[0]}}</ion-label>
+      </ion-col>
+      <ion-col *ngIf="DigitArray.length >= 2">
+        <ion-label>{{DigitArray[1]}}</ion-label>
+      </ion-col>
+      <ion-col *ngIf="DigitArray.length >= 3">
+        <ion-label>{{DigitArray[2]}}</ion-label>
+      </ion-col>
+      <ion-col *ngIf="DigitArray.length >= 4">
+        <ion-label>{{DigitArray[3]}}</ion-label>
+      </ion-col>
+      <ion-col *ngIf="DigitArray.length >= 5">
+        <ion-label>{{DigitArray[4]}}</ion-label>
+      </ion-col>
+      <ion-col *ngIf="DigitArray.length == 6">
+        <ion-label>{{DigitArray[5]}}</ion-label>
+      </ion-col>
+      <ion-col></ion-col>
+    </ion-row>
+  
+  <ion-card>
+    <ion-row text-center>
+      <ion-col></ion-col>
+      <ion-col>
+        <button ion-button round style="font-size: 24px; height: 60px; width: 120px;" (click)="keypad(1)">1</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button round style="font-size: 24px; height: 60px; width: 120px;" (click)="keypad(2)">2</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button round style="font-size: 24px; height: 60px; width: 120px;" (click)="keypad(3)">3</button>
+      </ion-col>
+      <ion-col></ion-col>
+    </ion-row>
+    <ion-row text-center>
+      <ion-col></ion-col>
+      <ion-col>
+        <button ion-button round style="font-size: 24px; height: 60px; width: 120px;" (click)="keypad(4)">4</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button round style="font-size: 24px; height: 60px; width: 120px;" (click)="keypad(5)">5</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button round style="font-size: 24px; height: 60px; width: 120px;" (click)="keypad(6)">6</button>
+      </ion-col>
+      <ion-col></ion-col>
+    </ion-row>
+    <ion-row text-center>
+      <ion-col></ion-col>
+      <ion-col>
+        <button ion-button round style="font-size: 24px; height: 60px; width: 120px;" (click)="keypad(7)">7</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button round style="font-size: 24px; height: 60px; width: 120px;" (click)="keypad(8)">8</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button round style="font-size: 24px; height: 60px; width: 120px;" (click)="keypad(9)">9</button>
+      </ion-col>
+      <ion-col></ion-col>
+    </ion-row>
+    <ion-row text-center>
+      <ion-col></ion-col>
+      <ion-col>
+        <button ion-button round style="font-size: 24px; height: 60px; width: 120px;"  [ngStyle]="{'background-color': '#f53d3d'}" (click)="keypad('backspace')">
+          <ion-icon name="backspace"></ion-icon>
+        </button>
+      </ion-col>
+      <ion-col>
+        <button ion-button round style="font-size: 24px; height: 60px; width: 120px;" (click)="keypad(0)">0</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button round style="font-size: 24px; height: 60px; width: 120px;" [ngStyle]="{'background-color': '#17A589'}" (click)="keypad('Enter')">Enter</button>
+      </ion-col>
+      <ion-col></ion-col>
+    </ion-row>
+  </ion-card>
+ 
+</ion-content>

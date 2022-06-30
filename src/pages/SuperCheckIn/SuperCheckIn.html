@@ -1,0 +1,48 @@
+<ion-header text-center>
+  <ion-navbar>
+    <ion-title style="padding-right: 30px;">Subway Load Check</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-card style="background: #E8F5E9">
+    <ion-row text-center>
+      <ion-label style = "font-size: 40px;">Supervisor Sign In</ion-label>
+    </ion-row>
+    
+    <ion-row text-center>
+      <ion-col>
+        <button ion-button (click)="showChangePayrollAlert(6)" >Click Here To Sign</button>
+      </ion-col>
+    </ion-row>
+  </ion-card>
+
+  <ion-card style="background: #E8F5E9">
+    <ion-row style="text-align: center;">
+      <ion-col col-3 style="color: black; font-size: 20px;">First Name</ion-col>
+      <ion-col col-3 style="color: black; font-size: 20px;">Last Name</ion-col>
+      <ion-col col-5 style="color: black; font-size: 20px;">Time</ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col></ion-col>
+    </ion-row>
+
+    <ion-row style="text-align: center;" *ngFor="let x of SuperCheck['Supervisor']">
+      <ion-col col-3 style="color: black; font-size: 15px;">{{x['SuperFirstName']}}</ion-col>
+      <ion-col col-3 style="color: black; font-size: 15px;">{{x['SuperLastName']}}</ion-col>
+      <ion-col col-5 style="color: black; font-size: 15px;">{{x['TimeStamp']}}</ion-col>
+    </ion-row>
+  </ion-card>
+  
+  <ion-card text-center>
+    <ion-row>
+      <ion-col></ion-col>
+      <ion-col col-auto>
+        <button ion-button tappable round style="font-size: 24px; height: 80px; width: 500px;" (click)='back()'>Go Back To Previous Page</button>
+      </ion-col>
+      <ion-col></ion-col>
+    </ion-row>
+  </ion-card>
+
+</ion-content>

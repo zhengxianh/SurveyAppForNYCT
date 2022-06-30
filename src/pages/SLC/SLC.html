@@ -1,0 +1,324 @@
+<ion-header text-center>
+  <ion-navbar>
+    <ion-row style="margin-top: 20px">
+      <ion-col></ion-col>
+      <ion-col>
+        <ion-title >Subway Load Check</ion-title>
+      </ion-col>
+      <ion-col>
+        <ion-buttons end>
+          <button ion-button icon-end solid color="secondary" (click)="superCheckIn()">Supervisor
+            <ion-icon name="contact"></ion-icon>
+          </button>
+        </ion-buttons>
+      </ion-col>
+    </ion-row>
+  </ion-navbar>
+</ion-header>
+
+<ion-content no-padding>
+
+  <ion-card style="background: #E8F5E9">
+    <ion-row>
+      <ion-col  col-4>
+        <ion-item>
+          <ion-label style="color: black; margin-right: 0px; font-size: 20px;">Line: </ion-label>
+          <ion-select style="padding-left: 0px;" [(ngModel)]="line" [style.backgroundColor]="line ? '#ffffff' : '#FFFF00'" interface="popover" (ionChange)="setTrain($event)">
+            <ion-option *ngFor="let l of _dapDictionary?.route" [value]="l">{{l}}</ion-option>
+            <ion-option>OTHER</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+
+      <ion-col col-auto *ngIf="checkOther">
+        <ion-item>
+          <ion-label no-padding style="color: gray; margin-right: 0px" disabled>{{_currentJobStop['trainID']}}</ion-label>
+        </ion-item>
+      </ion-col>
+
+      <ion-col>
+        <ion-item>
+          <ion-label no-padding style="color: black; margin-right: 0px; font-size: 20px;">Destination: </ion-label>
+          <ion-select [(ngModel)]="destination" style="font-size: 20px;" [disabled]="line != 'J' || line != 'M' || line != 'Z'" interface="popover" (ionChange)="setDest()" >
+            <ion-option *ngFor="let destination of destinationList[currentLine]" [value]="destination">{{destination}}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-label style="color: black; font-size: 20px; margin-left: 20px; margin-right: 0px" >Lead Car#: </ion-label>
+      </ion-col>
+      <ion-col col-auto>
+        <button ion-button style="font-size: 20px; color: black;" [style.backgroundColor]="carNumb ? '#E8F5E9' : '#FFFF00'" (click)="showSetCarNumbAlert(4)">{{carNumb}}</button>
+      </ion-col>
+
+      <ion-col col-1>
+      </ion-col>
+
+      <ion-col col-3>
+        <button ion-button (click)="startComfort()" [ngStyle]="{'background-color': '#D3D3D3'}">Start Comfort</button>
+      </ion-col>
+
+      <ion-col col-1>
+      </ion-col>
+
+      <ion-col col-3>
+        <button ion-button (click)="viewHistory()" [ngStyle]="{'background-color': '#138D75'}">History</button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row text-center>
+      <ion-col col-1>
+      </ion-col>
+      
+      <ion-col>
+        <button ion-button (click)='setTrainTime(1)' style="color: black;" [style.backgroundColor]="TrainArriveColor" [disabled]="TrainStop == 2 || TrainStop == 3 || (_currentJobStop['trainID'] == 'WT' || _currentJobStop['trainID'] == 'NIS')">Train Stop: {{_currentJobStop['actualArrive']}}</button>
+      </ion-col>
+      
+      <ion-col col-1>
+      </ion-col>
+      
+      <ion-col>
+        <button ion-button (click)='setTrainTime(0)' style="color: black;" [style.backgroundColor]="TrainLeaveColor" [disabled]="TrainStop == 1 || TrainStop == 3 || (_currentJobStop['trainID'] == 'WT' || _currentJobStop['trainID'] == 'NIS')">Train Start: {{_currentJobStop['actualLeave']}}</button>
+      </ion-col>
+    </ion-row>
+
+  </ion-card>
+
+  <ion-card text-center style="background: #E8F5E9" *ngIf="(_currentJobStop['trainID'] == 'WT' || _currentJobStop['trainID'] == 'NIS') && _currentJobStop['leadCarNumb'] != null">
+    <ion-row>
+      <ion-col></ion-col>
+      <ion-col col-auto>
+        <button ion-button tappable round style="font-size: 24px; height: 80px; width: 500px;" (click)='setTimeStamp()'>Record Arriving Time For WT/NIS</button>
+      </ion-col>
+      <ion-col></ion-col>
+    </ion-row>
+  </ion-card>
+
+  <ion-card style="background: #E8F5E9" *ngIf="_currentJobStop['trainID'] != 'WT' && _currentJobStop['trainID'] != 'NIS' && _currentJobStop['trainID'] != null && _currentJobStop['leadCarNumb'] != null && _currentJobStop['actualArrive'] != null">
+   
+    <ion-row style="text-align: center;" no-padding>
+      <ion-col>
+        <ion-label style="color: black; font-size: 20px;" no-margin>Car Number</ion-label>
+      </ion-col>
+    </ion-row>
+
+    <ion-row style="text-align: center;" no-padding>
+      <ion-col>
+        <button ion-button tappable (click)='setCar(1)' [ngStyle]="{'background-color': CarColor[1]}">1</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button tappable (click)='setCar(2)' [ngStyle]="{'background-color': CarColor[2]}">2</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button tappable (click)='setCar(3)' [disabled]="trainCarMax < 3" [ngStyle]="{'background-color': CarColor[3]}">3</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button tappable (click)='setCar(4)' [disabled]="trainCarMax < 4" [ngStyle]="{'background-color': CarColor[4]}">4</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button tappable (click)='setCar(5)' [disabled]="trainCarMax < 5" [ngStyle]="{'background-color': CarColor[5]}">5</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button tappable (click)='setCar(6)' [disabled]="trainCarMax < 6" [ngStyle]="{'background-color': CarColor[6]}">6</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button tappable (click)='setCar(7)' [disabled]="trainCarMax < 7" [ngStyle]="{'background-color': CarColor[7]}">7</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button tappable (click)='setCar(8)' [disabled]="trainCarMax < 8" [ngStyle]="{'background-color': CarColor[8]}">8</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button tappable (click)='setCar(9)' [disabled]="trainCarMax < 9" [ngStyle]="{'background-color': CarColor[9]}">9</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button tappable (click)='setCar(10)' [disabled]="trainCarMax < 10" [ngStyle]="{'background-color': CarColor[10]}">10</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button tappable (click)='setCar(11)' [disabled]="trainCarMax < 11" [ngStyle]="{'background-color': CarColor[11]}">11</button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row style="text-align: center;" no-padding>
+        <ion-col>
+          <ion-label style="color: black; font-size: 20px;" no-margin>Passenger Count(10x)</ion-label>
+        </ion-col>
+      </ion-row>
+
+    <ion-row style="text-align: center;" no-padding>
+      <ion-col>
+        <ion-label style="color: black; font-size: 20px;" *ngIf="_currentJobStopCars['1'] == null" disabled>0</ion-label>
+        <ion-label style="color: black; font-size: 20px;" *ngIf="_currentJobStopCars['1'] != null" disabled>{{_currentJobStopCars['1']}}</ion-label>
+      </ion-col>
+      <ion-col>
+        <ion-label style="color: black; font-size: 20px;">{{_currentJobStopCars['2']}}</ion-label>
+      </ion-col>
+      <ion-col>
+        <ion-label style="color: black; font-size: 20px;">{{_currentJobStopCars['3']}}</ion-label>
+      </ion-col>
+      <ion-col>
+        <ion-label style="color: black; font-size: 20px;">{{_currentJobStopCars['4']}}</ion-label>
+      </ion-col>
+      <ion-col>
+        <ion-label style="color: black; font-size: 20px;">{{_currentJobStopCars['5']}}</ion-label>
+      </ion-col>
+      <ion-col>
+        <ion-label style="color: black; font-size: 20px;">{{_currentJobStopCars['6']}}</ion-label>
+      </ion-col>
+      <ion-col>
+        <ion-label style="color: black; font-size: 20px;">{{_currentJobStopCars['7']}}</ion-label>
+     </ion-col>
+      <ion-col>
+        <ion-label style="color: black; font-size: 20px;">{{_currentJobStopCars['8']}}</ion-label>
+      </ion-col>
+      <ion-col>
+        <ion-label style="color: black; font-size: 20px;">{{_currentJobStopCars['9']}}</ion-label>
+      </ion-col>
+      <ion-col>
+        <ion-label style="color: black; font-size: 20px;">{{_currentJobStopCars['10']}}</ion-label>
+      </ion-col>
+      <ion-col>
+        <ion-label style="color: black; font-size: 20px;">{{_currentJobStopCars['11']}}</ion-label>
+      </ion-col>
+    </ion-row>
+
+    <ion-row text-center>
+      <ion-col></ion-col>
+      <ion-col>
+        <button ion-button round style="font-size: 24px; height: 60px; width: 120px;" [ngStyle]="{'background-color': CountColor[currentCar][0]}" (click)="setLoad(0, currentCar)">00</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button round style="font-size: 24px; height: 60px; width: 120px;" [ngStyle]="{'background-color': CountColor[currentCar][1]}" (click)="setLoad(1, currentCar)">01</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button round style="font-size: 24px; height: 60px; width: 120px;" [ngStyle]="{'background-color': CountColor[currentCar][2]}" (click)="setLoad(2, currentCar)">02</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button round style="font-size: 24px; height: 60px; width: 120px;" [ngStyle]="{'background-color': CountColor[currentCar][3]}" (click)="setLoad(3, currentCar)">03</button>
+      </ion-col>
+      <ion-col></ion-col>
+    </ion-row>
+
+    <ion-row text-center>
+      <ion-col></ion-col>
+      <ion-col>
+        <button ion-button round style="font-size: 24px; height: 60px; width: 120px;" [ngStyle]="{'background-color': CountColor[currentCar][4]}" (click)="setLoad(4, currentCar)">04</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button round style="font-size: 24px; height: 60px; width: 120px;" [ngStyle]="{'background-color': CountColor[currentCar][5]}" (click)="setLoad(5, currentCar)">05</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button round style="font-size: 24px; height: 60px; width: 120px;" [ngStyle]="{'background-color': CountColor[currentCar][6]}" (click)="setLoad(6, currentCar)">06</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button round style="font-size: 24px; height: 60px; width: 120px;" [ngStyle]="{'background-color': CountColor[currentCar][7]}" (click)="setLoad(7, currentCar)">07</button>
+      </ion-col>
+      <ion-col></ion-col>
+    </ion-row>
+
+    <ion-row text-center>
+      <ion-col></ion-col>
+      <ion-col>
+        <button ion-button round style="font-size: 24px; height: 60px; width: 120px;" [ngStyle]="{'background-color': CountColor[currentCar][8]}" (click)="setLoad(8, currentCar)">08</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button round style="font-size: 24px; height: 60px; width: 120px;" [ngStyle]="{'background-color': CountColor[currentCar][9]}" (click)="setLoad(9, currentCar)">09</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button round style="font-size: 24px; height: 60px; width: 120px;" [ngStyle]="{'background-color': CountColor[currentCar][10]}" (click)="setLoad(10, currentCar)">10</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button round style="font-size: 24px; height: 60px; width: 120px;" [ngStyle]="{'background-color': CountColor[currentCar][11]}" (click)="setLoad(11, currentCar)">11</button>
+      </ion-col>
+      <ion-col></ion-col>
+    </ion-row>
+
+    <ion-row text-center>
+      <ion-col>
+        <div class="vertical-text">
+          <label>Car Capacity</label>
+        </div>
+      </ion-col>
+      <ion-col>
+        <button ion-button round style="font-size: 24px; height: 60px; width: 120px;" [ngStyle]="{'background-color': CountColor[currentCar][12]}" (click)="setLoad(12, currentCar)">12</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button round style="font-size: 24px; height: 60px; width: 120px;" [ngStyle]="{'background-color': CountColor[currentCar][13]}" (click)="setLoad(13, currentCar)">13</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button round style="font-size: 24px; height: 60px; width: 120px;" [ngStyle]="{'background-color': CountColor[currentCar][14]}" (click)="setLoad(14, currentCar)">14</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button round style="font-size: 24px; height: 60px; width: 120px;" [ngStyle]="{'background-color': CountColor[currentCar][15]}" (click)="setLoad(15, currentCar)">15</button>
+      </ion-col>
+      <ion-col></ion-col>
+    </ion-row>
+
+    <ion-row text-center>
+      <ion-col></ion-col>
+      <ion-col>
+        <button ion-button round style="font-size: 24px; height: 60px; width: 120px;" [disabled]="trainCap <= 150" [ngStyle]="{'background-color': CountColor[currentCar][16]}" (click)="setLoad(16, currentCar)">16</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button round style="font-size: 24px; height: 60px; width: 120px;" [disabled]="trainCap <= 150" [ngStyle]="{'background-color': CountColor[currentCar][17]}" (click)="setLoad(17, currentCar)">17</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button round style="font-size: 24px; height: 60px; width: 120px;" [disabled]="trainCap <= 150" [ngStyle]="{'background-color': CountColor[currentCar][18]}" (click)="setLoad(18, currentCar)">18</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button round style="font-size: 24px; height: 60px; width: 120px;" [disabled]="trainCap <= 150" [ngStyle]="{'background-color': CountColor[currentCar][19]}" (click)="setLoad(19, currentCar)">19</button>
+      </ion-col>
+      <ion-col></ion-col>
+    </ion-row>
+
+    <ion-row text-center>
+      <ion-col></ion-col>
+      <ion-col>
+        <button ion-button round style="font-size: 24px; height: 60px; width: 120px;" [disabled]="trainCap <= 150" [ngStyle]="{'background-color': CountColor[currentCar][20]}" (click)="setLoad(20, currentCar)">20</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button round style="font-size: 24px; height: 60px; width: 120px;" [disabled]="trainCap <= 200" [ngStyle]="{'background-color': CountColor[currentCar][21]}" (click)="setLoad(21, currentCar)">21</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button round style="font-size: 24px; height: 60px; width: 120px;" [disabled]="trainCap <= 200" [ngStyle]="{'background-color': CountColor[currentCar][22]}" (click)="setLoad(22, currentCar)">22</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button round style="font-size: 24px; height: 60px; width: 120px;" [disabled]="trainCap <= 200" [ngStyle]="{'background-color': CountColor[currentCar][23]}" (click)="setLoad(23, currentCar)">23</button>
+      </ion-col>
+      <ion-col></ion-col>
+    </ion-row>
+
+    <ion-row text-center *ngIf="(trainCarMax > trainCarMin) && (currentCar > trainCarMin)">
+      <ion-col></ion-col>
+      <ion-col>
+        <button ion-button tappable round style="color: black; font-size: 24px; height: 60px; width: 120px;" (click)='resetCar()' [ngStyle]="{'background-color': CountColor[currentCar][24]}">No Car</button>
+      </ion-col>
+      <ion-col></ion-col>    
+    </ion-row>
+
+  </ion-card>
+
+  <ion-card style="background: #E8F5E9;">
+    <ion-row>
+      <ion-col col-auto>
+        <button ion-button (click)="previousTrain()" [disabled]="CurrentSuvey == 0" [ngStyle]="{'background-color': '#FF1493'}"> 
+          <ion-icon name="ios-arrow-dropleft" style="padding-right: 10px;"></ion-icon>Previous Train
+        </button>
+      </ion-col>
+      <ion-col col-6>
+        <ion-item style="background: #E8F5E9;">
+          <ion-label style="color: black; font-size: 20px;">Comment:</ion-label>
+          <ion-input style="padding: 0px; border: 0px; font-size: 20px;" type="text" [(ngModel)]="comment" value="{{_currentJobStop[notes]}}" (input)='setComment(comment)'></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col style="text-align: right;">
+        <button ion-button (click)='nextTrain()' [ngStyle]="{'background-color': '#FF1493'}">Next Train
+          <ion-icon name="ios-arrow-dropright" style="padding-left: 10px;"></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-card>
+</ion-content>
+
